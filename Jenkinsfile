@@ -20,7 +20,7 @@ pipeline {
         stage('Test') {
             steps {
                 bat 'docker run -d --name test-container -v C:\\Project\\sentiment-logs:/logs movie-sentiment-app:latest'
-                bat 'timeout /t 10'
+                bat 'ping 127.0.0.1 -n 11'
                 bat 'docker cp test-container:/logs/history.log C:\\Project\\sentiment-logs\\test_history.log'
                 bat 'docker stop test-container'
                 bat 'docker rm test-container'
@@ -36,7 +36,7 @@ pipeline {
     }
     post {
         always {
-            bat 'docker system prune -f'
+            bat 'docker image prune -f'
         }
     }
 }
