@@ -6,12 +6,6 @@ pipeline {
                 git url: 'https://github.com/atul-harsh33108/movie-sentiment-app.git', branch: 'main'
             }
         }
-        stage('Copy Model Files') {
-            steps {
-                bat 'copy C:\\Project\\jenkins-workspace\\*.pkl .'
-                bat 'copy C:\\Project\\jenkins-workspace\\*.h5 .'
-            }
-        }
         stage('Build') {
             steps {
                 bat 'docker build -t movie-sentiment-app:latest .'
@@ -28,6 +22,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                bat 'docker network create sentiment-net || exit 0'
                 bat 'docker stop movie-sentiment-app || exit 0'
                 bat 'docker rm movie-sentiment-app || exit 0'
                 bat 'docker run -d --name movie-sentiment-app -p 8501:8501 -v C:\\Project\\sentiment-logs:/logs --network sentiment-net movie-sentiment-app:latest'
