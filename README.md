@@ -37,4 +37,4 @@ This repository contains a Streamlit web application for sentiment analysis of m
 - Model files hosted in repo (completed 2025-07-26).
 
 ## License
-MIT License (or specify your preferred license).
+MIT License .
